@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.IO;
 using System.Reflection;
 using log4net;
@@ -41,7 +41,7 @@ namespace Test_Taste_Console_Application
                 //The users and developers can see the thrown exceptions.
                 Logger.Instance.Error($"{LoggerMessage.ScreenOutputOperationFailed}{exception.Message}");
                 Console.WriteLine($"{ExceptionMessage.ScreenOutputOperationFailed}{exception.Message}");
-                System.Diagnostics.Debug.WriteLine($""{ExceptionMessage.ScreenOutputOperationFailed}{exception.Message}"");
+                System.Diagnostics.Debug.WriteLine($"{ExceptionMessage.ScreenOutputOperationFailed}{exception.Message}");
             }
 
             serviceProvider.Dispose();
