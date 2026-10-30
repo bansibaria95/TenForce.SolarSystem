@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Net.Http;
 using Newtonsoft.Json;
 using Test_Taste_Console_Application.Constants;
 using Test_Taste_Console_Application.Domain.DataTransferObjects;
@@ -15,7 +17,6 @@ namespace Test_Taste_Console_Application.Domain.Services
     {
         private readonly HttpClientService _httpClientService;
 
-
         public MoonService(HttpClientService httpClientService)
         {
             _httpClientService = httpClientService;
@@ -23,27 +24,40 @@ namespace Test_Taste_Console_Application.Domain.Services
 
         public IEnumerable<Moon> GetAllMoons()
         {
-            var response = _httpClientService.Client
-                .GetAsync(UriPath.GetAllMoonsWithMassQueryParameters)
-                .Result;
+            HttpResponseMessage response;
+            try
+            {
+                response = _httpClientService.Client
+                    .GetAsync(UriPath.GetAllMoonsWithMassQueryParameters)
+                    .Result;
+            }
+            catch (Exception ex)
+            {
+                Logger.Instance.Error($"Error requesting moons from API: {ex.Message}", ex);
+                return SolarSystemDataFallback.GetMoons();
+            }
 
-            //If the status code isn't 200-299, then the function returns an empty collection.
+            // If the status code isn't 200-299, then the function falls back to authentic Solar System data.
             if (!response.IsSuccessStatusCode)
             {
                 Logger.Instance.Warn($"{LoggerMessage.GetRequestFailed}{response.StatusCode}");
-                return new Collection<Moon>();
+                if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
+                {
+                    Logger.Instance.Info("API returned 401 Unauthorized (API key required by live server). Falling back to authentic Solar System dataset.");
+                }
+                return SolarSystemDataFallback.GetMoons();
             }
 
             var content = response.Content.ReadAsStringAsync().Result;
 
-            //The JSON converter uses DTO's, that can be found in the DataTransferObjects folder, to deserialize the response content.
+            // The JSON converter uses DTO's, that can be found in the DataTransferObjects folder, to deserialize the response content.
             var allMoons = new Collection<Moon>();
             var results = JsonConvert.DeserializeObject<JsonResult<MoonDto>>(content);
 
-            //The JSON converter can return a null object. 
-            if (results == null) return new Collection<Moon>();
+            // The JSON converter can return a null object. 
+            if (results?.Bodies == null) return allMoons;
 
-            foreach(MoonDto moonDto in results.Bodies)
+            foreach (MoonDto moonDto in results.Bodies)
             {
                 allMoons.Add(new Moon(moonDto));
             }

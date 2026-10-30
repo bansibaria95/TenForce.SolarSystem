@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using Test_Taste_Console_Application.Constants;
@@ -19,6 +19,12 @@ namespace Test_Taste_Console_Application.Domain.Services
             Client.BaseAddress = new Uri(UriPath.BaseUri);
             Client.DefaultRequestHeaders.Accept.Add(new
                 MediaTypeWithQualityHeaderValue(HttpClientSettings.JsonType));
+
+            var apiKey = Environment.GetEnvironmentVariable("SOLAR_SYSTEM_API_KEY");
+            if (!string.IsNullOrWhiteSpace(apiKey))
+            {
+                Client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", apiKey);
+            }
         }
     }
 }
