@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -53,7 +52,7 @@ namespace Test_Taste_Console_Application.Domain.Objects
             }
         }
 
-        public Boolean HasMoons()
+        public bool HasMoons()
         {
             return (Moons != null && Moons.Count > 0);
         }

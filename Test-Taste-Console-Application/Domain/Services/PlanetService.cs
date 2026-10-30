@@ -1,10 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Globalization;
 using System.Linq;
 using System.Net.Http;
-using System.Text;
 using Newtonsoft.Json;
 using Test_Taste_Console_Application.Constants;
 using Test_Taste_Console_Application.Domain.DataTransferObjects;
@@ -125,26 +123,6 @@ namespace Test_Taste_Console_Application.Domain.Services
             }
 
             return allPlanetsWithTheirMoons;
-        }
-
-        private static string RemoveDiacritics(string text)
-        {
-            var normalizedString = text.Normalize(NormalizationForm.FormD);
-            var stringBuilder = new StringBuilder(capacity: normalizedString.Length);
-
-            for (int i = 0; i < normalizedString.Length; i++)
-            {
-                char c = normalizedString[i];
-                var unicodeCategory = CharUnicodeInfo.GetUnicodeCategory(c);
-                if (unicodeCategory != UnicodeCategory.NonSpacingMark)
-                {
-                    stringBuilder.Append(c);
-                }
-            }
-
-            return stringBuilder
-                .ToString()
-                .Normalize(NormalizationForm.FormC);
         }
     }
 }

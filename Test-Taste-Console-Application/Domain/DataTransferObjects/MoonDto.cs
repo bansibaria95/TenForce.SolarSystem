@@ -1,12 +1,11 @@
 using System.Linq;
-using System.Text.Json.Serialization;
 using Newtonsoft.Json;
 using Test_Taste_Console_Application.Domain.DataTransferObjects.JsonObjects;
 
 namespace Test_Taste_Console_Application.Domain.DataTransferObjects
 {
     //The converter is needed for this DTO. Because of the converter, all the properties need to get the JsonProperty annotation. 
-    [Newtonsoft.Json.JsonConverter(typeof(JsonPathConverter))]
+    [JsonConverter(typeof(JsonPathConverter))]
     public class MoonDto
     {
         [JsonProperty("id")] public string Id { get; set; }

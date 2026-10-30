@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using Newtonsoft.Json;
+using System.Collections.Generic;
 
 namespace Test_Taste_Console_Application.Domain.DataTransferObjects
 {

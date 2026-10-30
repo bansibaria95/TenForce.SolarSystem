@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+using System;
 using System.Linq;
 using System.Text;
 
@@ -25,7 +24,6 @@ namespace Test_Taste_Console_Application.Utilities
             }
 
             Console.WriteLine(stringBuilder.ToString());
-            stringBuilder.Clear();
         }
 
         public static void CreateText(string[] columnLabels, int[] columnSizes)

@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using Test_Taste_Console_Application.Domain.DataTransferObjects;
+using System.Collections.Generic;
 using Test_Taste_Console_Application.Domain.Objects;
 
 namespace Test_Taste_Console_Application.Domain.Services.Interfaces
