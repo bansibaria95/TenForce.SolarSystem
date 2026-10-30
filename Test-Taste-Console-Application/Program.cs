@@ -29,12 +29,34 @@ namespace Test_Taste_Console_Application
 
             //The service provider gets the services.
             var screenOutputService = serviceProvider.GetService<IOutputService>();
+            var fileOutputService = serviceProvider.GetService<IFileOutputService>();
 
             try
             {
+                Console.WriteLine(OutputString.LoadingData);
+                Console.WriteLine(OutputString.ProcessingBodies);
+                Console.WriteLine(OutputString.IdentifyingPlanetsWithMoons);
+                Console.WriteLine(OutputString.CalculatingAverageMoonTemperatures);
+                ConsoleWriter.CreateEmptyLines(1);
+
+                Console.WriteLine(OutputString.WritingDataToConsole);
+                ConsoleWriter.CreateEmptyLines(1);
+
+                // Output average moon temperature (new requirement)
+                screenOutputService.OutputAllPlanetsAndTheirAverageMoonTemperatureToConsole();
+
+                // Existing outputs preserved
                 screenOutputService.OutputAllPlanetsAndTheirAverageMoonGravityToConsole();
                 screenOutputService.OutputAllMoonsAndTheirMassToConsole();
                 screenOutputService.OutputAllPlanetsAndTheirMoonsToConsole();
+
+                Console.WriteLine(OutputString.WritingDataToFile);
+                fileOutputService.OutputAllPlanetsAndTheirAverageMoonTemperatureToFile();
+                fileOutputService.OutputAllPlanetsAndTheirMoonsToFile();
+                fileOutputService.OutputAllMoonsAndTheirMassToFile();
+                ConsoleWriter.CreateEmptyLines(1);
+
+                Console.WriteLine(OutputString.CompletedSuccessfully);
             }
             catch (Exception exception)
             {
@@ -55,6 +77,7 @@ namespace Test_Taste_Console_Application
             serviceCollection.AddHttpClient<HttpClientService>();
             serviceCollection.AddSingleton<IPlanetService, PlanetService>();
             serviceCollection.AddSingleton<IOutputService, ScreenOutputService>();
+            serviceCollection.AddSingleton<IFileOutputService, FileOutputService>();
             serviceCollection.AddSingleton<IMoonService, MoonService>();
         }
     }

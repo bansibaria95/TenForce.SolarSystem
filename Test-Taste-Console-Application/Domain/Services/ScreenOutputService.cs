@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 using Test_Taste_Console_Application.Constants;
 using Test_Taste_Console_Application.Domain.Objects;
@@ -184,6 +184,39 @@ namespace Test_Taste_Console_Application.Domain.Services
                 1                   |0.0f
                 --------------------+--------------------------------------------------
             */
+        }
+
+        public void OutputAllPlanetsAndTheirAverageMoonTemperatureToConsole()
+        {
+            // Displays planets that have at least one moon and the average temperature of their moons
+            var planets = _planetService.GetAllPlanets().Where(p => p.HasMoons()).ToArray();
+            if (!planets.Any())
+            {
+                Console.WriteLine(OutputString.NoPlanetsFound);
+                return;
+            }
+
+            var columnSizes = new[] { 20, 42 };
+            var columnLabels = new[]
+            {
+                OutputString.PlanetId, $"{OutputString.PlanetMoonAverageTemperature} ({OutputString.TemperatureUnit})"
+            };
+
+            ConsoleWriter.CreateHeader(columnLabels, columnSizes);
+
+            foreach (Planet planet in planets)
+            {
+                ConsoleWriter.CreateText(
+                    new string[]
+                    {
+                        CultureInfoUtility.TextInfo.ToTitleCase(planet.Id),
+                        $"{planet.AverageMoonTemperature:F2} {OutputString.TemperatureUnit}"
+                    },
+                    columnSizes);
+            }
+
+            ConsoleWriter.CreateLine(columnSizes);
+            ConsoleWriter.CreateEmptyLines(2);
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿namespace Test_Taste_Console_Application.Constants
+namespace Test_Taste_Console_Application.Constants
 {
     public class OutputString
     {
@@ -11,9 +11,21 @@
         public const string MoonMassExponent = "Moon's Mass Exponent";
         public const string MoonMassValue = "Moon's Mass Value";
         public const string PlanetMoonAverageGravity = "The Planet's Average Moon Gravity";
+        public const string PlanetMoonAverageTemperature = "The Planet's Average Moon Temperature";
+        public const string MoonAverageTemperature = "Moon's Average Temperature";
+        public const string TemperatureUnit = "K";
         public const string NoMoonsFound = "No moons found.";
         public const string NoPlanetsFound = "No planets found.";
         public const string FileCreated = "The file is created in: ";
         public const string FolderCreated = "The folder is created in: ";
+
+        // Execution progress messages
+        public const string LoadingData = "Loading data...";
+        public const string ProcessingBodies = "Processing Solar System bodies...";
+        public const string IdentifyingPlanetsWithMoons = "Identifying planets with moons...";
+        public const string CalculatingAverageMoonTemperatures = "Calculating average moon temperatures...";
+        public const string WritingDataToConsole = "Writing data to console...";
+        public const string WritingDataToFile = "Writing data to file...";
+        public const string CompletedSuccessfully = "Completed successfully.";
     }
 }
